@@ -26,8 +26,12 @@ key at rest, authorize a caller, enforce a policy, or revoke access. Consumers
 must provide those facilities. The example's temporary key is for learning,
 not persistent storage.
 
+Hosted [CI run 35913875127](https://github.com/AlexiAxAxA/OpenCrateSDK/actions/runs/35913875127)
+passed Linux and Windows tests, Clippy, Rustdoc, the example, and a separate
+`cargo-deny` check for licenses, bans, advisories and sources on commit
+`f0891b5`.
+
 Before a stable release: review the `OCSB1` wire and domain separation with an
 independent cryptography reviewer, add a frozen compatibility vector and
-versioning policy, run hosted Linux/Windows CI and advisory checks, and obtain
-feedback from an integrator outside the project. The local tests verify the
-implementation paths listed above; they do not establish production security.
+versioning policy, and obtain feedback from an integrator outside the project.
+These checks do not establish production security.
