@@ -1,0 +1,8 @@
+/target/
+*.pdb
+*.exe
+*.key
+*.pem
+*.cc
+.env
+.env.*

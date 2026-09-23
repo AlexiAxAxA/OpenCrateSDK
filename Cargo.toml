@@ -1,0 +1,27 @@
+[package]
+name = "opencrate-sdk"
+version = "0.0.1"
+edition = "2024"
+rust-version = "1.96"
+description = "Application SDK for sealed data built on the Open Crate core"
+repository = "https://github.com/AlexiAxAxA/OpenCrateSDK"
+readme = "README.md"
+license-file = "LICENSE-OPENCRATE"
+publish = false
+
+[workspace]
+
+[dependencies]
+oc-crypto = "=0.0.1"
+getrandom = { version = "0.4.3", features = ["sys_rng"] }
+zeroize = "1.9.0"
+
+[lints.rust]
+unsafe_code = "forbid"
+
+[lints.clippy]
+indexing_slicing = "deny"
+unwrap_used = "deny"
+expect_used = "deny"
+panic = "deny"
+arithmetic_side_effects = "deny"
