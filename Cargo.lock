@@ -429,9 +429,9 @@ dependencies = [
 
 [[package]]
 name = "oc-crypto"
-version = "0.0.1"
+version = "0.0.2"
 source = "registry+https://github.com/rust-lang/crates.io-index"
-checksum = "5199ad4c14bf43d8908c9021d56da28619bbf6a70f3fa3c3aa6adf1da7aa9fd8"
+checksum = "c1f47ae87a283dc3f2896685c7cf491befd83a761a91ac8ea916645aa8cbc339"
 dependencies = [
  "blake3",
  "chacha20poly1305",
@@ -451,7 +451,7 @@ dependencies = [
 
 [[package]]
 name = "opencrate-sdk"
-version = "0.0.1"
+version = "0.0.2"
 dependencies = [
  "getrandom",
  "oc-crypto",

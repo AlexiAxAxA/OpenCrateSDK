@@ -1,7 +1,13 @@
 # Security review of the SDK preview
 
-Status: **internal review in progress; no independent audit or release claim**.
+Status: **internal review in progress; no independent audit**.
 This document records the checks performed on the `0.0.1` preview candidate.
+
+The `0.0.2` preview keeps the `OCSB1` implementation and public API from
+`0.0.1`; its dependency is now `oc-crypto = 0.0.2`. Local checks covered the
+SDK round trip and binding failures with the new dependency, plus a fresh
+registry consumer through `opencrate::app_data`. These checks do not replace an
+independent review of the envelope and key lifecycle.
 
 ## Properties checked locally
 
