@@ -1,0 +1,45 @@
+<svg xmlns="http://www.w3.org/2000/svg" width="1200" height="360" viewBox="0 0 1200 360" role="img" aria-labelledby="title desc">
+  <title id="title">Open Crate SDK</title>
+  <desc id="desc">Seal JSON, messages and other application bytes into an authenticated envelope using the Open Crate core.</desc>
+  <defs>
+    <linearGradient id="background" x2="1" y2="1"><stop stop-color="#101b31"/><stop offset="1" stop-color="#172940"/></linearGradient>
+    <linearGradient id="accent" x2="1" y2="1"><stop stop-color="#76d9f7"/><stop offset="1" stop-color="#5289ef"/></linearGradient>
+    <linearGradient id="warm" x2="1" y2="1"><stop stop-color="#ffc487"/><stop offset="1" stop-color="#ed8e62"/></linearGradient>
+    <filter id="glow"><feGaussianBlur stdDeviation="26"/></filter>
+  </defs>
+  <rect width="1200" height="360" rx="24" fill="url(#background)"/>
+  <circle cx="996" cy="179" r="162" fill="#5289ef" opacity=".12" filter="url(#glow)"/>
+  <path d="M0 306H1200M0 252H1200M0 198H1200" stroke="#9cc8ea" opacity=".045"/>
+  <path d="M742 0V360M810 0V360M878 0V360M946 0V360M1014 0V360M1082 0V360" stroke="#9cc8ea" opacity=".045"/>
+  <g font-family="Segoe UI,Arial,sans-serif">
+    <text x="62" y="66" font-size="14" font-weight="700" letter-spacing="3" fill="#92c8ed">APPLICATION LAYER · BUILT ON OPEN CRATE</text>
+    <text x="59" y="149" font-size="65" font-weight="700" fill="#f5f8ff">Open Crate SDK</text>
+    <text x="62" y="197" font-size="24" fill="#c1cee1">Seal bytes. Build beyond documents.</text>
+    <text x="62" y="235" font-size="17" fill="#93a8c5">A small Rust API for JSON, messages and application data.</text>
+    <rect x="62" y="278" width="74" height="32" rx="16" fill="#243a56"/>
+    <text x="99" y="299" font-size="14" fill="#c4e6ff" text-anchor="middle">Rust</text>
+    <rect x="148" y="278" width="158" height="32" rx="16" fill="#243a56"/>
+    <text x="227" y="299" font-size="14" fill="#c4e6ff" text-anchor="middle">One recipient</text>
+    <rect x="318" y="278" width="154" height="32" rx="16" fill="#243a56"/>
+    <text x="395" y="299" font-size="14" fill="#c4e6ff" text-anchor="middle">Source preview</text>
+  </g>
+  <g stroke-linejoin="round">
+    <rect x="773" y="107" width="129" height="143" rx="18" fill="#1f3958" stroke="#5482ad"/>
+    <rect x="786" y="122" width="103" height="113" rx="10" fill="#132942" stroke="#42688e"/>
+    <path d="M810 161 800 175 810 189M864 161 874 175 864 189" fill="none" stroke="#76d9f7" stroke-width="3" stroke-linecap="round"/>
+    <path d="M850 156 824 195" fill="none" stroke="#ffc487" stroke-width="3" stroke-linecap="round"/>
+    <path d="M912 178H946" stroke="url(#accent)" stroke-width="4" stroke-linecap="round"/>
+    <path d="m937 169 10 9-10 9" fill="none" stroke="#76d9f7" stroke-width="4" stroke-linecap="round"/>
+    <rect x="960" y="97" width="188" height="163" rx="22" fill="#25486e" stroke="#78afe0"/>
+    <rect x="974" y="112" width="160" height="133" rx="13" fill="#173451" stroke="#5a8cba"/>
+    <path d="M974 147H1134" stroke="#5179a1"/>
+    <path d="M994 169H1082M994 187H1113M994 205H1061" stroke="url(#accent)" stroke-width="5" stroke-linecap="round" opacity=".8"/>
+    <path d="M1054 82 1074 71 1094 82 1074 94Z" fill="url(#warm)" stroke="#ffd0a5"/>
+    <path d="M1054 82 1074 94 1074 110 1054 98Z" fill="#cb7554"/>
+    <path d="M1074 94 1094 82 1094 98 1074 110Z" fill="#e99365"/>
+  </g>
+  <g font-family="Segoe UI,Arial,sans-serif" font-size="13" fill="#b8d2eb" text-anchor="middle">
+    <text x="838" y="277">YOUR BYTES</text>
+    <text x="1054" y="284">OCSB1 ENVELOPE</text>
+  </g>
+</svg>

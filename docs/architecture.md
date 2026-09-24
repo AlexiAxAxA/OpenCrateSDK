@@ -1,5 +1,8 @@
 # Architecture
 
+For a step-by-step application flow and key lifecycle, see the
+[integration guide](usage-guide.md).
+
 The SDK is a separate application-layer project. It depends on the published
 `oc-crypto = 0.0.1` package; it does not copy core source or depend on the
 private Close Crate product.

@@ -1,29 +1,49 @@
-# Open Crate SDK
+![Open Crate SDK — seal application bytes with the Open Crate core](docs/assets/sdk-banner.svg)
 
-A Rust SDK for small encrypted application values, built on the published
-[`oc-crypto`](https://crates.io/crates/oc-crypto) core. The input can be JSON,
-a message, or binary data. The result is an authenticated `OCSB1` envelope,
-not a `.cc` document.
+**Seal application data without building a `.cc` document.**
 
-This repository is a **source-only preview**. Its API and envelope have not
-been released or independently audited. It does not issue leases, revoke
-access, or enforce an access policy.
+[![SDK CI](https://github.com/AlexiAxAxA/OpenCrateSDK/actions/workflows/ci.yml/badge.svg)](https://github.com/AlexiAxAxA/OpenCrateSDK/actions/workflows/ci.yml)
+&nbsp; `Rust 1.96+` · `source preview` · `one recipient`
 
-## Try it
+Open Crate SDK is a small Rust layer over the published
+[`oc-crypto`](https://crates.io/crates/oc-crypto) core. Give it JSON, a message,
+or any other byte slice up to **16 MiB**. It returns an authenticated `OCSB1`
+envelope that your application can store or send.
 
-Install Rust, then from this repository:
+> [!IMPORTANT]
+> This is a **source-only preview**. The API and `OCSB1` envelope have no stable
+> compatibility promise or independent security audit. The SDK is not on
+> crates.io. Pin the Git revision when integrating it.
+
+| Start here | Go deeper |
+| --- | --- |
+| [Run the example](#try-it-in-30-seconds) · [Add it to an app](#use-it-in-your-app) | [Integration guide with diagrams](docs/usage-guide.md) · [Architecture](docs/architecture.md) · [Security review](docs/security-review.md) |
+
+## Try it in 30 seconds
+
+With [Rust installed](https://www.rust-lang.org/tools/install):
 
 ```sh
+git clone https://github.com/AlexiAxAxA/OpenCrateSDK.git
+cd OpenCrateSDK
 cargo run --locked --example json-message
 ```
 
-The example seals JSON-shaped bytes for one recipient, opens them, and checks
-the result. In your own project, use a path dependency while the SDK is a
-preview:
+The [example](examples/json-message.rs) seals JSON-shaped bytes for a temporary
+recipient key, opens them, and verifies the result. To run the checks locally:
+
+```sh
+cargo test --locked
+cargo clippy --locked --all-targets -- -D warnings
+```
+
+## Use it in your app
+
+Until a package release, pin this source revision in your `Cargo.toml`:
 
 ```toml
 [dependencies]
-opencrate-sdk = { path = "../OpenCrateSDK" }
+opencrate-sdk = { git = "https://github.com/AlexiAxAxA/OpenCrateSDK", rev = "2950d74ec7d67bd14a8da3e7311910398a576400" }
 ```
 
 ```rust
@@ -31,33 +51,57 @@ use opencrate_sdk::{generate_recipient, open_bytes, recipient_public, seal_bytes
 
 fn main() -> Result<(), Box<dyn std::error::Error>> {
     let secret = generate_recipient()?;
-    let envelope = seal_bytes(
-        &recipient_public(&secret),
-        "com.example.invoice.v1",
-        b"tenant-7",
-        br#"{"total":42}"#,
-    )?;
-    let plaintext = open_bytes(&secret, "com.example.invoice.v1", b"tenant-7", &envelope)?;
+    let public = recipient_public(&secret);
+    let purpose = "com.example.invoice.v1";
+    let context = b"tenant-7:invoice-42";
+
+    let envelope = seal_bytes(&public, purpose, context, br#"{"total":42}"#)?;
+    let plaintext = open_bytes(&secret, purpose, context, &envelope)?;
     assert_eq!(&*plaintext, br#"{"total":42}"#);
     Ok(())
 }
 ```
 
-The example generates a temporary key. A real application must protect and
-reload the same recipient secret, distribute an authentic public key, and
-persist the envelope. `X25519Secret` is re-exported for a key-store adapter;
-its `from_bytes` and `expose` methods are explicit import/export boundaries.
-Keep the application-specific `purpose` and `context` stable. Neither is stored
-in the envelope, and a mismatch prevents opening.
+This example keeps the key in memory to show the API. A real application must
+protect and reload its recipient secret, authenticate the public key before
+senders use it, and store the envelope. It must also supply the **same**
+`purpose` and `context` when opening; neither value is included in `OCSB1`.
+See the [step-by-step integration guide](docs/usage-guide.md) before storing
+data you will need to open later.
 
-The input limit is 16 MiB. For large files, multiple recipients, author
-signatures and policy-controlled document access, use the
-[Open Crate core](https://github.com/AlexiAxAxA/OpenCrate) and its `.cc` format.
-The [architecture](docs/architecture.md) explains the separation. The
-[security review](docs/security-review.md) records what has and has not been
-checked for this preview.
+## What the SDK handles
+
+```mermaid
+flowchart LR
+    A[Application bytes] --> S[seal_bytes]
+    K[Recipient public key] --> S
+    S --> E[OCSB1 envelope]
+    E --> O[open_bytes]
+    R[Recipient secret key] --> O
+    O --> P[Authenticated bytes]
+```
+
+| SDK provides | Your application provides |
+| --- | --- |
+| OS-backed recipient key generation | Secure key storage, backup, and authentic public-key distribution |
+| X25519 sealing through `oc-crypto` | Storage and transport of the envelope |
+| Authenticated `purpose` and `context` binding | Stable purpose and context values on both sides |
+| A bounded envelope and zeroizing returned plaintext | Authorization, access policy, and any revocation workflow |
+
+`OCSB1` is a sealed-data envelope, **not** the `CLOSECR1` `.cc` document format.
+It has one recipient and no author signature, lease, policy evaluation, or
+revocation. For document containers and lower-level building blocks, see the
+[Open Crate core](https://github.com/AlexiAxAxA/OpenCrate).
+
+## Documentation
+
+- [Integration guide](docs/usage-guide.md) — diagrams, key flow, API calls,
+  persistence checklist, and errors.
+- [Architecture](docs/architecture.md) — component boundary and `OCSB1` layout.
+- [Security review](docs/security-review.md) — checks performed and work needed
+  before a stable release.
 
 ## License
 
 The [Open Crate Community License 1.0](LICENSE-OPENCRATE) applies to this SDK
-and its Open Crate core dependency. See the complete terms in the license file.
+and its Open Crate core dependency. Read its complete terms before use.
