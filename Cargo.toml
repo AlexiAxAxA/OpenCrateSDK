@@ -7,7 +7,10 @@ description = "Application SDK for sealed data built on the Open Crate core"
 repository = "https://github.com/AlexiAxAxA/OpenCrateSDK"
 readme = "README.md"
 license-file = "LICENSE-OPENCRATE"
-publish = false
+keywords = ["encryption", "cryptography", "x25519", "sdk"]
+categories = ["cryptography"]
+publish = ["crates-io"]
+include = ["Cargo.toml", "README.md", "LICENSE-OPENCRATE", "src/**", "examples/**", "docs/**"]
 
 [workspace]
 

@@ -1,6 +1,6 @@
 # Integration guide
 
-This guide shows how to use the **source preview** of Open Crate SDK for small
+This guide shows how to use the **0.0.1 preview** of Open Crate SDK for small
 application values. It covers one X25519 recipient and byte slices up to
 **16 MiB**. The SDK is not a storage service or an access-control system.
 
@@ -28,12 +28,12 @@ operation; the SDK supplies the OS random source and `OCSB1` framing.
 
 ## 2. Add the dependency
 
-This preview is not published to crates.io. Pin a Git commit so a future change
-does not silently change your build:
+Pin the preview version from crates.io so a future release does not silently
+change your build:
 
 ```toml
 [dependencies]
-opencrate-sdk = { git = "https://github.com/AlexiAxAxA/OpenCrateSDK", rev = "2950d74ec7d67bd14a8da3e7311910398a576400" }
+opencrate-sdk = "=0.0.1"
 ```
 
 The SDK requires Rust 1.96 or newer. You can instead clone this repository and

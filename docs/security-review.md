@@ -1,7 +1,7 @@
 # Security review of the SDK preview
 
 Status: **internal review in progress; no independent audit or release claim**.
-This document records the checks performed on this source-only candidate.
+This document records the checks performed on the `0.0.1` preview candidate.
 
 ## Properties checked locally
 

@@ -1,9 +1,9 @@
-![Open Crate SDK — seal application bytes with the Open Crate core](docs/assets/sdk-banner.svg)
+![Open Crate SDK — seal application bytes with the Open Crate core](https://raw.githubusercontent.com/AlexiAxAxA/OpenCrateSDK/main/docs/assets/sdk-banner.svg)
 
 **Seal application data without building a `.cc` document.**
 
 [![SDK CI](https://github.com/AlexiAxAxA/OpenCrateSDK/actions/workflows/ci.yml/badge.svg)](https://github.com/AlexiAxAxA/OpenCrateSDK/actions/workflows/ci.yml)
-&nbsp; `Rust 1.96+` · `source preview` · `one recipient`
+&nbsp; `Rust 1.96+` · `0.0.1 preview` · `one recipient`
 
 Open Crate SDK is a small Rust layer over the published
 [`oc-crypto`](https://crates.io/crates/oc-crypto) core. Give it JSON, a message,
@@ -11,13 +11,14 @@ or any other byte slice up to **16 MiB**. It returns an authenticated `OCSB1`
 envelope that your application can store or send.
 
 > [!IMPORTANT]
-> This is a **source-only preview**. The API and `OCSB1` envelope have no stable
-> compatibility promise or independent security audit. The SDK is not on
-> crates.io. Pin the Git revision when integrating it.
+> Version `0.0.1` is a **preview**. The API and `OCSB1` envelope have no stable
+> compatibility promise or independent security audit. Protect recipient keys
+> and review the [security boundary](https://github.com/AlexiAxAxA/OpenCrateSDK/blob/main/docs/security-review.md)
+> before storing data you need to keep.
 
 | Start here | Go deeper |
 | --- | --- |
-| [Run the example](#try-it-in-30-seconds) · [Add it to an app](#use-it-in-your-app) | [Integration guide with diagrams](docs/usage-guide.md) · [Architecture](docs/architecture.md) · [Security review](docs/security-review.md) |
+| [Run the example](#try-it-in-30-seconds) · [Add it to an app](#use-it-in-your-app) | [Integration guide with diagrams](https://github.com/AlexiAxAxA/OpenCrateSDK/blob/main/docs/usage-guide.md) · [Architecture](https://github.com/AlexiAxAxA/OpenCrateSDK/blob/main/docs/architecture.md) · [Security review](https://github.com/AlexiAxAxA/OpenCrateSDK/blob/main/docs/security-review.md) |
 
 ## Try it in 30 seconds
 
@@ -29,7 +30,7 @@ cd OpenCrateSDK
 cargo run --locked --example json-message
 ```
 
-The [example](examples/json-message.rs) seals JSON-shaped bytes for a temporary
+The [example](https://github.com/AlexiAxAxA/OpenCrateSDK/blob/main/examples/json-message.rs) seals JSON-shaped bytes for a temporary
 recipient key, opens them, and verifies the result. To run the checks locally:
 
 ```sh
@@ -39,11 +40,11 @@ cargo clippy --locked --all-targets -- -D warnings
 
 ## Use it in your app
 
-Until a package release, pin this source revision in your `Cargo.toml`:
+Add the preview release to your `Cargo.toml`:
 
 ```toml
 [dependencies]
-opencrate-sdk = { git = "https://github.com/AlexiAxAxA/OpenCrateSDK", rev = "2950d74ec7d67bd14a8da3e7311910398a576400" }
+opencrate-sdk = "=0.0.1"
 ```
 
 ```rust
@@ -66,7 +67,7 @@ This example keeps the key in memory to show the API. A real application must
 protect and reload its recipient secret, authenticate the public key before
 senders use it, and store the envelope. It must also supply the **same**
 `purpose` and `context` when opening; neither value is included in `OCSB1`.
-See the [step-by-step integration guide](docs/usage-guide.md) before storing
+See the [step-by-step integration guide](https://github.com/AlexiAxAxA/OpenCrateSDK/blob/main/docs/usage-guide.md) before storing
 data you will need to open later.
 
 ## What the SDK handles
@@ -95,13 +96,13 @@ revocation. For document containers and lower-level building blocks, see the
 
 ## Documentation
 
-- [Integration guide](docs/usage-guide.md) — diagrams, key flow, API calls,
+- [Integration guide](https://github.com/AlexiAxAxA/OpenCrateSDK/blob/main/docs/usage-guide.md) — diagrams, key flow, API calls,
   persistence checklist, and errors.
-- [Architecture](docs/architecture.md) — component boundary and `OCSB1` layout.
-- [Security review](docs/security-review.md) — checks performed and work needed
+- [Architecture](https://github.com/AlexiAxAxA/OpenCrateSDK/blob/main/docs/architecture.md) — component boundary and `OCSB1` layout.
+- [Security review](https://github.com/AlexiAxAxA/OpenCrateSDK/blob/main/docs/security-review.md) — checks performed and work needed
   before a stable release.
 
 ## License
 
-The [Open Crate Community License 1.0](LICENSE-OPENCRATE) applies to this SDK
+The [Open Crate Community License 1.0](https://github.com/AlexiAxAxA/OpenCrateSDK/blob/main/LICENSE-OPENCRATE) applies to this SDK
 and its Open Crate core dependency. Read its complete terms before use.
