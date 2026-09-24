@@ -24,6 +24,11 @@ Use this package directly for the small API, or enable `app-data` on
 | --- | --- |
 | [Run the example](#try-it-in-30-seconds) · [Add it to an app](#use-it-in-your-app) | [Integration guide with diagrams](https://github.com/AlexiAxAxA/OpenCrateSDK/blob/main/docs/usage-guide.md) · [Architecture](https://github.com/AlexiAxAxA/OpenCrateSDK/blob/main/docs/architecture.md) · [Security review](https://github.com/AlexiAxAxA/OpenCrateSDK/blob/main/docs/security-review.md) |
 
+**Python, Java and C++:** build the separate native library in `ffi/` and follow
+the [foreign-language guide](docs/foreign-languages.md). It exposes the same
+sealed-byte workflow through an experimental C ABI; the Rust SDK remains the
+direct API for Rust applications.
+
 ## Try it in 30 seconds
 
 With [Rust installed](https://www.rust-lang.org/tools/install):

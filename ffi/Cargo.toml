@@ -1,0 +1,25 @@
+[package]
+name = "opencrate-ffi"
+version = "0.1.0"
+edition = "2024"
+rust-version = "1.96"
+description = "Experimental C ABI for Open Crate SDK sealed bytes"
+license-file = "../LICENSE-OPENCRATE"
+publish = false
+
+[lib]
+crate-type = ["cdylib"]
+
+[workspace]
+
+[dependencies]
+opencrate-sdk = { version = "=0.0.2", path = ".." }
+zeroize = "1.9.0"
+
+[lints.rust]
+unsafe_op_in_unsafe_fn = "deny"
+
+[lints.clippy]
+unwrap_used = "deny"
+expect_used = "deny"
+panic = "deny"

@@ -1,4 +1,7 @@
 /target/
+/ffi/target/
+__pycache__/
+*.class
 *.pdb
 *.exe
 *.key

@@ -24,6 +24,15 @@ crate = "oc-crypto"
 expression = "LicenseRef-OpenCrate-Community-1.0"
 license-files = [{ path = "LICENSE-OPENCRATE", hash = 0xd44aae0f }]
 
+[[licenses.exceptions]]
+crate = "opencrate-ffi"
+allow = ["LicenseRef-OpenCrate-Community-1.0"]
+
+[[licenses.clarify]]
+crate = "opencrate-ffi"
+expression = "LicenseRef-OpenCrate-Community-1.0"
+license-files = [{ path = "../LICENSE-OPENCRATE", hash = 0xd44aae0f }]
+
 [bans]
 multiple-versions = "deny"
 
