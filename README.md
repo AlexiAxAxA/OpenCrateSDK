@@ -3,15 +3,19 @@
 **Seal application data without building a `.cc` document.**
 
 [![SDK CI](https://github.com/AlexiAxAxA/OpenCrateSDK/actions/workflows/ci.yml/badge.svg)](https://github.com/AlexiAxAxA/OpenCrateSDK/actions/workflows/ci.yml)
-&nbsp; `Rust 1.96+` · `0.0.1 preview` · `one recipient`
+&nbsp; `Rust 1.96+` · `0.0.2 preview` · `one recipient`
 
 Open Crate SDK is a small Rust layer over the published
 [`oc-crypto`](https://crates.io/crates/oc-crypto) core. Give it JSON, a message,
 or any other byte slice up to **16 MiB**. It returns an authenticated `OCSB1`
 envelope that your application can store or send.
 
+Use this package directly for the small API, or enable `app-data` on
+[`opencrate`](https://crates.io/crates/opencrate) to reach the same API as
+`opencrate::app_data` alongside the five low-level core libraries.
+
 > [!IMPORTANT]
-> Version `0.0.1` is a **preview**. The API and `OCSB1` envelope have no stable
+> Version `0.0.2` is a **preview**. The API and `OCSB1` envelope have no stable
 > compatibility promise or independent security audit. Protect recipient keys
 > and review the [security boundary](https://github.com/AlexiAxAxA/OpenCrateSDK/blob/main/docs/security-review.md)
 > before storing data you need to keep.
@@ -44,7 +48,7 @@ Add the preview release to your `Cargo.toml`:
 
 ```toml
 [dependencies]
-opencrate-sdk = "=0.0.1"
+opencrate-sdk = "=0.0.2"
 ```
 
 ```rust
