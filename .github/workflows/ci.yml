@@ -22,3 +22,23 @@ jobs:
       - uses: actions/checkout@11bd71901bbe5b1630ceea73d27597364c9af683 # v4.2.2
       - run: cargo install cargo-deny --locked --version 0.20.2
       - run: cargo deny --locked check licenses bans advisories sources
+      - run: cargo deny --manifest-path ffi/Cargo.toml --config deny.toml --locked check licenses bans advisories sources
+  foreign-languages:
+    runs-on: ubuntu-latest
+    env:
+      OPENCRATE_FFI_LIB: ${{ github.workspace }}/ffi/target/debug/libopencrate_ffi.so
+      LD_LIBRARY_PATH: ${{ github.workspace }}/ffi/target/debug
+    steps:
+      - uses: actions/checkout@11bd71901bbe5b1630ceea73d27597364c9af683 # v4.2.2
+      - uses: actions/setup-java@de7274f081f381c8f8158605e0321c36c376e2e6 # v6
+        with:
+          distribution: temurin
+          java-version: '25'
+      - run: cargo build --locked --manifest-path ffi/Cargo.toml
+      - run: cargo test --locked --manifest-path ffi/Cargo.toml
+      - run: cargo clippy --locked --manifest-path ffi/Cargo.toml --all-targets -- -D warnings
+      - run: python3 bindings/python/smoke.py
+      - run: g++ -std=c++17 -Wall -Wextra -Werror -I ffi/include bindings/cpp/smoke.cpp -L ffi/target/debug -lopencrate_ffi -o ffi/target/cpp-smoke
+      - run: ffi/target/cpp-smoke
+      - run: javac -d ffi/target/java bindings/java/OpenCrateBytesSmoke.java
+      - run: java --enable-native-access=ALL-UNNAMED -cp ffi/target/java OpenCrateBytesSmoke

@@ -7,6 +7,11 @@ The SDK is a separate application-layer project. It depends on the published
 `oc-crypto = 0.0.2` package; it does not copy core source or depend on the
 private Close Crate product.
 
+The optional `ffi/` shared library sits above the SDK for Python, Java and
+C++ callers. It is a separate package because only this boundary handles raw
+foreign pointers; neither `opencrate-sdk` nor `oc-crypto` gains unsafe code.
+Its ABI v1 exposes the SDK's sealed-byte operations, not `.cc` orchestration.
+
 ```mermaid
 flowchart LR
   App[Your application: storage and key protection] --> SDK[Open Crate SDK]

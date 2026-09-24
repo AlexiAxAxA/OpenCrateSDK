@@ -9,6 +9,13 @@ SDK round trip and binding failures with the new dependency, plus a fresh
 registry consumer through `opencrate::app_data`. These checks do not replace an
 independent review of the envelope and key lifecycle.
 
+The separate experimental C ABI in `ffi/` adds raw-pointer and caller-buffer
+contracts. Python, Java and C++ smoke programs must be treated as integration
+checks, not an audit of the language runtimes or key storage. The ABI accepts
+only bounded inputs, copies them before output writes, catches Rust panics and
+returns generic cryptographic errors; invalid foreign pointers remain caller
+undefined behavior. See [foreign-language usage](foreign-languages.md).
+
 ## Properties checked locally
 
 - The SDK imports `oc-crypto = 0.0.1` from the registry in a standalone Cargo
