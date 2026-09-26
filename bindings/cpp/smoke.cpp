@@ -1,3 +1,4 @@
+// SPDX-License-Identifier: MPL-2.0
 #include "opencrate_ffi.h"
 
 #include <array>

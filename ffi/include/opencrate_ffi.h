@@ -1,3 +1,4 @@
+// SPDX-License-Identifier: MPL-2.0
 #ifndef OPENCRATE_FFI_H
 #define OPENCRATE_FFI_H
 

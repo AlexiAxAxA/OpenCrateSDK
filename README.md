@@ -3,7 +3,7 @@
 **Seal application bytes from Rust, Python, Java or C++.**
 
 [![SDK CI](https://github.com/AlexiAxAxA/OpenCrateSDK/actions/workflows/ci.yml/badge.svg)](https://github.com/AlexiAxAxA/OpenCrateSDK/actions/workflows/ci.yml)
-&nbsp; `Rust 1.96+` · `0.0.2 preview` · `one recipient`
+&nbsp; `Rust 1.96+` · `0.0.5 preview` · `one recipient`
 
 Open Crate SDK is a small Rust layer over the published
 [`oc-crypto`](https://crates.io/crates/oc-crypto) core. Give it JSON, a message,
@@ -18,10 +18,10 @@ Use this package directly for the small API, or enable `app-data` on
 
 | Language | How to start |
 | --- | --- |
-| Rust | Add `opencrate-sdk = "=0.0.2"` to `Cargo.toml`; [run the example](#try-it-in-30-seconds) or [copy the API example](#use-it-in-your-app). |
-| Python | Build `ffi/` with `cargo build --manifest-path ffi/Cargo.toml --locked`, then use the [`ctypes` wrapper and example](docs/foreign-languages.md#python). |
-| Java 22+ | Build `ffi/`, then run the [FFM example](docs/foreign-languages.md#java); no JNI or external JAR is required. |
-| C++ | Build `ffi/`, include `ffi/include/opencrate_ffi.h`, and follow the [linking example](docs/foreign-languages.md#c). |
+| Rust | Add `opencrate-sdk = "=0.0.5"` to `Cargo.toml`; [run the example](#run-the-example) or [copy the API example](#use-it-in-your-app). |
+| Python | Clone this repository, build `ffi/` with `cargo build --manifest-path ffi/Cargo.toml --locked`, then use the [`ctypes` wrapper and example](https://github.com/AlexiAxAxA/OpenCrateSDK/blob/main/docs/foreign-languages.md#python). |
+| Java 22+ | Build `ffi/`, then run the [FFM example](https://github.com/AlexiAxAxA/OpenCrateSDK/blob/main/docs/foreign-languages.md#java); no JNI or external JAR is required. |
+| C++ | Build `ffi/`, include `ffi/include/opencrate_ffi.h`, and follow the [linking example](https://github.com/AlexiAxAxA/OpenCrateSDK/blob/main/docs/foreign-languages.md#c). |
 
 These paths seal and open the SDK's `OCSB1` byte envelope. To inspect the
 **`.cc` document container**, use the separate [Open Crate core](https://github.com/AlexiAxAxA/OpenCrate):
@@ -31,21 +31,23 @@ and [runnable examples](https://github.com/AlexiAxAxA/OpenCrate/blob/main/exampl
 The foreign-language bindings do not expose `.cc` operations.
 
 > [!IMPORTANT]
-> Version `0.0.2` is a **preview**. The API and `OCSB1` envelope have no stable
+> Version `0.0.5` is a **preview**. The API and `OCSB1` envelope have no stable
 > compatibility promise or independent security audit. Protect recipient keys
 > and review the [security boundary](https://github.com/AlexiAxAxA/OpenCrateSDK/blob/main/docs/security-review.md)
 > before storing data you need to keep.
 
 | Start here | Go deeper |
 | --- | --- |
-| [Run the example](#try-it-in-30-seconds) · [Add it to an app](#use-it-in-your-app) | [Integration guide with diagrams](https://github.com/AlexiAxAxA/OpenCrateSDK/blob/main/docs/usage-guide.md) · [Architecture](https://github.com/AlexiAxAxA/OpenCrateSDK/blob/main/docs/architecture.md) · [Security review](https://github.com/AlexiAxAxA/OpenCrateSDK/blob/main/docs/security-review.md) |
+| [Run the example](#run-the-example) · [Add it to an app](#use-it-in-your-app) | [Integration guide with diagrams](https://github.com/AlexiAxAxA/OpenCrateSDK/blob/main/docs/usage-guide.md) · [Architecture](https://github.com/AlexiAxAxA/OpenCrateSDK/blob/main/docs/architecture.md) · [Security review](https://github.com/AlexiAxAxA/OpenCrateSDK/blob/main/docs/security-review.md) |
 
-The [foreign-language guide](docs/foreign-languages.md) explains the
+The [foreign-language guide](https://github.com/AlexiAxAxA/OpenCrateSDK/blob/main/docs/foreign-languages.md) explains the
 experimental C ABI, library paths, buffers, and key handling.
 
-## Try it in 30 seconds
+## Run the example
 
 With [Rust installed](https://www.rust-lang.org/tools/install):
+
+The first build downloads and compiles dependencies; its duration depends on your machine.
 
 ```sh
 git clone https://github.com/AlexiAxAxA/OpenCrateSDK.git
@@ -67,7 +69,7 @@ Add the preview release to your `Cargo.toml`:
 
 ```toml
 [dependencies]
-opencrate-sdk = "=0.0.2"
+opencrate-sdk = "=0.0.5"
 ```
 
 ```rust
@@ -121,7 +123,7 @@ revocation. For document containers and lower-level building blocks, see the
 
 - [Integration guide](https://github.com/AlexiAxAxA/OpenCrateSDK/blob/main/docs/usage-guide.md) — diagrams, key flow, API calls,
   persistence checklist, and errors.
-- [Python, Java and C++](docs/foreign-languages.md) — native build and language examples.
+- [Python, Java and C++](https://github.com/AlexiAxAxA/OpenCrateSDK/blob/main/docs/foreign-languages.md) — native build and language examples.
 - [`.cc` container documentation](https://github.com/AlexiAxAxA/OpenCrate/blob/main/docs/index.md) — the separate core format and examples.
 - [Architecture](https://github.com/AlexiAxAxA/OpenCrateSDK/blob/main/docs/architecture.md) — component boundary and `OCSB1` layout.
 - [Security review](https://github.com/AlexiAxAxA/OpenCrateSDK/blob/main/docs/security-review.md) — checks performed and work needed
@@ -129,5 +131,9 @@ revocation. For document containers and lower-level building blocks, see the
 
 ## License
 
-The [Open Crate Community License 1.0](https://github.com/AlexiAxAxA/OpenCrateSDK/blob/main/LICENSE-OPENCRATE) applies to this SDK
-and its Open Crate core dependency. Read its complete terms before use.
+Licensed under [MPL-2.0](https://github.com/AlexiAxAxA/OpenCrateSDK/blob/main/LICENSE),
+including the experimental FFI and language wrappers. SDK 0.0.5 uses the
+MPL-2.0 `oc-crypto` 0.0.5 release. Registry archives 0.0.1 and 0.0.2 keep their
+original Community License.
+Commercial use is allowed. Distributed modifications to covered files remain
+under MPL-2.0; separate application files can use other terms.

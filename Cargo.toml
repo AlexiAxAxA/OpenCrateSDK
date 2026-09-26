@@ -1,21 +1,21 @@
 [package]
 name = "opencrate-sdk"
-version = "0.0.2"
+version = "0.0.5"
 edition = "2024"
 rust-version = "1.96"
 description = "Application SDK for sealed data built on the Open Crate core"
 repository = "https://github.com/AlexiAxAxA/OpenCrateSDK"
 readme = "README.md"
-license-file = "LICENSE-OPENCRATE"
+license = "MPL-2.0"
 keywords = ["encryption", "cryptography", "x25519", "sdk"]
 categories = ["cryptography"]
 publish = ["crates-io"]
-include = ["Cargo.toml", "README.md", "LICENSE-OPENCRATE", "src/**", "examples/**", "docs/**"]
+include = ["Cargo.toml", "README.md", "LICENSE", "src/**", "tests/**", "examples/**", "docs/**"]
 
 [workspace]
 
 [dependencies]
-oc-crypto = "=0.0.2"
+oc-crypto = "=0.0.5"
 getrandom = { version = "0.4.3", features = ["sys_rng"] }
 zeroize = "1.9.0"
 

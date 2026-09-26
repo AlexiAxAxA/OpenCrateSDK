@@ -1,3 +1,4 @@
+// SPDX-License-Identifier: MPL-2.0
 //! Small host-side SDK for encrypting application data without a `.cc` container.
 //!
 //! This API seals bytes to one X25519 recipient. It does not issue leases,
@@ -9,8 +10,7 @@ use getrandom::rand_core::{Infallible, TryCryptoRng, TryRng};
 use oc_crypto::{CryptoError, seal::SealedBlob};
 use zeroize::{Zeroize, Zeroizing};
 
-/// Recipient secret type. Its debug representation redacts the key; storage
-/// and backup remain the application's responsibility.
+/// Recipient key, redacted in `Debug`. The application stores and backs it up.
 pub use oc_crypto::secret::X25519Secret;
 
 const MAGIC: &[u8; 5] = b"OCSB1";
@@ -19,13 +19,18 @@ const MAX_PURPOSE: usize = 128;
 const MAX_BYTES: usize = 16 * 1024 * 1024;
 const ENVELOPE_OVERHEAD: usize = 5 + 32 + 24 + 16;
 
-/// An SDK failure. No secret material is included in diagnostics.
+/// An SDK failure; diagnostics contain no key or plaintext bytes.
 #[derive(Debug)]
 pub enum Error {
+    /// Purpose is empty or exceeds 128 UTF-8 bytes.
     InvalidPurpose,
+    /// Plaintext or envelope exceeds the 16 MiB payload limit.
     TooLarge,
+    /// Envelope magic, length, or field layout is invalid.
     InvalidEnvelope,
+    /// The operating system could not supply random bytes.
     Entropy,
+    /// Key agreement or authentication failed in the core.
     Crypto(CryptoError),
 }
 
@@ -74,12 +79,21 @@ pub fn seal_bytes(
     context: &[u8],
     plaintext: &[u8],
 ) -> Result<Vec<u8>, Error> {
+    seal_bytes_with_rng(recipient, purpose, context, plaintext, &mut FallibleOsRng::default())
+}
+
+fn seal_bytes_with_rng(
+    recipient: &[u8; 32],
+    purpose: &str,
+    context: &[u8],
+    plaintext: &[u8],
+    rng: &mut FallibleOsRng,
+) -> Result<Vec<u8>, Error> {
     let info = info(purpose)?;
     if plaintext.len() > MAX_BYTES {
         return Err(Error::TooLarge);
     }
-    let mut rng = FallibleOsRng::default();
-    let result = oc_crypto::seal::seal(recipient, &info, context, plaintext, &mut rng);
+    let result = oc_crypto::seal::seal(recipient, &info, context, plaintext, rng);
     if rng.failed {
         return Err(Error::Entropy);
     }
@@ -140,12 +154,17 @@ fn info(purpose: &str) -> Result<Vec<u8>, Error> {
     Ok(info)
 }
 
-/// Adapt the fallible OS source to the core's infallible RNG trait. On an OS
-/// failure, supply zeros only to the intermediate operation, then discard its
-/// result and report `Entropy`. No output generated after failure escapes.
+/// Bridge OS entropy errors to the core's infallible RNG trait.
+/// Once entropy fails, zero-fill subsequent requests. `seal_bytes` checks the
+/// flag before using any result, so this intermediate output cannot escape.
 #[derive(Default)]
 struct FallibleOsRng {
     failed: bool,
+    // Test-only entropy fault injection; production uses OS entropy.
+    #[cfg(test)]
+    fail_after: Option<usize>,
+    #[cfg(test)]
+    draws: usize,
 }
 
 impl TryRng for FallibleOsRng {
@@ -164,6 +183,13 @@ impl TryRng for FallibleOsRng {
     }
 
     fn try_fill_bytes(&mut self, dst: &mut [u8]) -> Result<(), Self::Error> {
+        #[cfg(test)]
+        {
+            if self.fail_after == Some(self.draws) {
+                self.failed = true;
+            }
+            self.draws = self.draws.saturating_add(1);
+        }
         if self.failed || getrandom::fill(dst).is_err() {
             self.failed = true;
             dst.fill(0);
@@ -177,6 +203,31 @@ impl TryCryptoRng for FallibleOsRng {}
 #[cfg(test)]
 mod tests {
     use super::*;
+
+    #[test]
+    fn entropy_failure_on_either_draw_never_releases_an_envelope() -> Result<(), Error> {
+        let secret = X25519Secret::from_bytes([0x11; 32]);
+        let public = recipient_public(&secret);
+        for failed_draw in 0..=1 {
+            let mut rng = FallibleOsRng { fail_after: Some(failed_draw), ..Default::default() };
+            assert!(matches!(
+                seal_bytes_with_rng(&public, "review", b"tenant", b"sentinel", &mut rng),
+                Err(Error::Entropy)
+            ));
+            let mut destination = [0x5a; 32];
+            assert!(rng.try_fill_bytes(&mut destination).is_ok());
+            assert_eq!(destination, [0; 32]);
+            assert!(matches!(
+                seal_bytes_with_rng(&public, "review", b"tenant", b"sentinel", &mut rng),
+                Err(Error::Entropy)
+            ));
+        }
+        let mut control = FallibleOsRng { fail_after: Some(2), ..Default::default() };
+        let envelope = seal_bytes_with_rng(&public, "review", b"tenant", b"sentinel", &mut control)?;
+        assert!(!control.failed);
+        assert_eq!(open_bytes(&secret, "review", b"tenant", &envelope)?.as_slice(), b"sentinel");
+        Ok(())
+    }
 
     #[test]
     fn round_trip_and_binding_failures() -> Result<(), Error> {
