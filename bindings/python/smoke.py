@@ -1,3 +1,4 @@
+# SPDX-License-Identifier: MPL-2.0
 """Run with OPENCRATE_FFI_LIB pointing to the built shared library."""
 
 import ctypes as c

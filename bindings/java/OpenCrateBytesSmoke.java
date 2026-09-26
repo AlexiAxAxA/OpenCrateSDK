@@ -1,3 +1,4 @@
+// SPDX-License-Identifier: MPL-2.0
 import java.lang.foreign.Arena;
 import java.lang.foreign.FunctionDescriptor;
 import java.lang.foreign.Linker;

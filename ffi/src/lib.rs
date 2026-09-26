@@ -1,3 +1,4 @@
+// SPDX-License-Identifier: MPL-2.0
 //! Experimental C ABI for the Open Crate sealed-byte SDK.
 //!
 //! The pure Rust core and SDK keep their own safety rules. Raw-pointer handling

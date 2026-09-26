@@ -4,7 +4,7 @@ version = "0.1.0"
 edition = "2024"
 rust-version = "1.96"
 description = "Experimental C ABI for Open Crate SDK sealed bytes"
-license-file = "../LICENSE-OPENCRATE"
+license = "MPL-2.0"
 publish = false
 
 [lib]
@@ -13,7 +13,7 @@ crate-type = ["cdylib"]
 [workspace]
 
 [dependencies]
-opencrate-sdk = { version = "=0.0.2", path = ".." }
+opencrate-sdk = { version = "=0.0.3", path = ".." }
 zeroize = "1.9.0"
 
 [lints.rust]

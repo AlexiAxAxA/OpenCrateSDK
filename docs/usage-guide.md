@@ -1,6 +1,6 @@
 # Integration guide
 
-This guide shows how to use the **0.0.2 preview** of Open Crate SDK for small
+This guide shows how to use the **0.0.3 preview** of Open Crate SDK for small
 application values. It covers one X25519 recipient and byte slices up to
 **16 MiB**. The SDK is not a storage service or an access-control system.
 
@@ -17,7 +17,7 @@ The dependency direction is deliberately small:
 ```mermaid
 flowchart LR
     App[Your application] --> SDK[opencrate-sdk]
-    SDK --> Core[oc-crypto 0.0.2]
+    SDK --> Core[oc-crypto 0.0.3]
     SDK --> RNG[Operating-system randomness]
     App --> Keys[(Protected key store)]
     App --> Data[(Envelope store or transport)]
@@ -33,7 +33,7 @@ change your build:
 
 ```toml
 [dependencies]
-opencrate-sdk = "=0.0.2"
+opencrate-sdk = "=0.0.3"
 ```
 
 The SDK requires Rust 1.96 or newer. You can instead clone this repository and

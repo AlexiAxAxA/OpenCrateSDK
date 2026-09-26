@@ -1,3 +1,4 @@
+// SPDX-License-Identifier: MPL-2.0
 //! Demonstrate the SDK with JSON-shaped bytes, not a `.cc` file.
 use opencrate_sdk::{generate_recipient, open_bytes, recipient_public, seal_bytes};
 

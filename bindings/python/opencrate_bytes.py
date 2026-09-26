@@ -1,3 +1,4 @@
+# SPDX-License-Identifier: MPL-2.0
 """Small ctypes binding for the experimental Open Crate sealed-byte C ABI.
 
 Set OPENCRATE_FFI_LIB to the built shared library or pass its path explicitly.
