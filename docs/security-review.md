@@ -16,9 +16,11 @@ only bounded inputs, copies them before output writes, catches Rust panics and
 returns generic cryptographic errors; invalid foreign pointers remain caller
 undefined behavior. See [foreign-language usage](foreign-languages.md).
 
-The 0.0.3 release adopts MPL-2.0 and fixes recipient encoding validation through
-`oc-crypto = "=0.0.3"`. Noncanonical recipients are rejected before an unusable
-envelope can be returned. The OCSB1 layout, KDF and public API stay unchanged.
+The 0.0.4 release uses MPL-2.0 and fixes DH encoding validation through
+`oc-crypto = "=0.0.4"`. Noncanonical recipients are rejected before an unusable
+envelope can be returned. The core also checks ephemeral encodings before DH/KDF
+and explicitly redacts both private hybrid-key fields in Debug output. The OCSB1
+layout, KDF and public API stay unchanged.
 
 New local checks cover 10,928 envelope bit mutations, 1,366 truncations, ten
 appended-byte checks, purpose/context binding, low-order and noncanonical
@@ -26,7 +28,8 @@ recipients, the 16 MiB boundary, and entropy failure on either RNG draw. Eight
 Python ABI tests exercise the actual native library with valid buffers. Tests,
 Clippy, Rustdoc and license/advisory/source checks passed locally. The core's
 [review notes](https://github.com/AlexiAxAxA/OpenCrate/blob/main/docs/review-2026-09-26.md)
-describe the three reproduced defects and the limits of the additional audit.
+describe ten regression tests, the bounded property checks and the limits of
+the additional audit.
 
 ## Properties checked locally
 

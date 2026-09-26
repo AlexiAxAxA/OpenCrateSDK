@@ -3,7 +3,7 @@
 **Seal application bytes from Rust, Python, Java or C++.**
 
 [![SDK CI](https://github.com/AlexiAxAxA/OpenCrateSDK/actions/workflows/ci.yml/badge.svg)](https://github.com/AlexiAxAxA/OpenCrateSDK/actions/workflows/ci.yml)
-&nbsp; `Rust 1.96+` · `0.0.3 preview` · `one recipient`
+&nbsp; `Rust 1.96+` · `0.0.4 preview` · `one recipient`
 
 Open Crate SDK is a small Rust layer over the published
 [`oc-crypto`](https://crates.io/crates/oc-crypto) core. Give it JSON, a message,
@@ -18,7 +18,7 @@ Use this package directly for the small API, or enable `app-data` on
 
 | Language | How to start |
 | --- | --- |
-| Rust | Add `opencrate-sdk = "=0.0.3"` to `Cargo.toml`; [run the example](#run-the-example) or [copy the API example](#use-it-in-your-app). |
+| Rust | Add `opencrate-sdk = "=0.0.4"` to `Cargo.toml`; [run the example](#run-the-example) or [copy the API example](#use-it-in-your-app). |
 | Python | Clone this repository, build `ffi/` with `cargo build --manifest-path ffi/Cargo.toml --locked`, then use the [`ctypes` wrapper and example](https://github.com/AlexiAxAxA/OpenCrateSDK/blob/main/docs/foreign-languages.md#python). |
 | Java 22+ | Build `ffi/`, then run the [FFM example](https://github.com/AlexiAxAxA/OpenCrateSDK/blob/main/docs/foreign-languages.md#java); no JNI or external JAR is required. |
 | C++ | Build `ffi/`, include `ffi/include/opencrate_ffi.h`, and follow the [linking example](https://github.com/AlexiAxAxA/OpenCrateSDK/blob/main/docs/foreign-languages.md#c). |
@@ -31,7 +31,7 @@ and [runnable examples](https://github.com/AlexiAxAxA/OpenCrate/blob/main/exampl
 The foreign-language bindings do not expose `.cc` operations.
 
 > [!IMPORTANT]
-> Version `0.0.3` is a **preview**. The API and `OCSB1` envelope have no stable
+> Version `0.0.4` is a **preview**. The API and `OCSB1` envelope have no stable
 > compatibility promise or independent security audit. Protect recipient keys
 > and review the [security boundary](https://github.com/AlexiAxAxA/OpenCrateSDK/blob/main/docs/security-review.md)
 > before storing data you need to keep.
@@ -69,7 +69,7 @@ Add the preview release to your `Cargo.toml`:
 
 ```toml
 [dependencies]
-opencrate-sdk = "=0.0.3"
+opencrate-sdk = "=0.0.4"
 ```
 
 ```rust
@@ -132,8 +132,8 @@ revocation. For document containers and lower-level building blocks, see the
 ## License
 
 Licensed under [MPL-2.0](https://github.com/AlexiAxAxA/OpenCrateSDK/blob/main/LICENSE),
-including the experimental FFI and language wrappers. SDK 0.0.3 uses the
-MPL-2.0 `oc-crypto` 0.0.3 release. Older registry archives keep their
+including the experimental FFI and language wrappers. SDK 0.0.4 uses the
+MPL-2.0 `oc-crypto` 0.0.4 release. Registry archives 0.0.1 and 0.0.2 keep their
 original Community License.
 Commercial use is allowed. Distributed modifications to covered files remain
 under MPL-2.0; separate application files can use other terms.
