@@ -430,6 +430,8 @@ dependencies = [
 [[package]]
 name = "oc-crypto"
 version = "0.0.3"
+source = "registry+https://github.com/rust-lang/crates.io-index"
+checksum = "8ff98311eb07d5d5c48115f9c896e3b8701bb2167c6bea07648859a89af5e028"
 dependencies = [
  "blake3",
  "chacha20poly1305",
