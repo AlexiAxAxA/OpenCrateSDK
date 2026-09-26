@@ -13,7 +13,7 @@ crate-type = ["cdylib"]
 [workspace]
 
 [dependencies]
-opencrate-sdk = { version = "=0.0.4", path = ".." }
+opencrate-sdk = { version = "=0.0.5", path = ".." }
 zeroize = "1.9.0"
 
 [lints.rust]

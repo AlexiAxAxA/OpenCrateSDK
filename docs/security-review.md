@@ -16,8 +16,8 @@ only bounded inputs, copies them before output writes, catches Rust panics and
 returns generic cryptographic errors; invalid foreign pointers remain caller
 undefined behavior. See [foreign-language usage](foreign-languages.md).
 
-The 0.0.4 release uses MPL-2.0 and fixes DH encoding validation through
-`oc-crypto = "=0.0.4"`. Noncanonical recipients are rejected before an unusable
+The 0.0.5 release uses MPL-2.0 and fixes DH encoding validation through
+`oc-crypto = "=0.0.5"`. Noncanonical recipients are rejected before an unusable
 envelope can be returned. The core also checks ephemeral encodings before DH/KDF
 and explicitly redacts both private hybrid-key fields in Debug output. The OCSB1
 layout, KDF and public API stay unchanged.
